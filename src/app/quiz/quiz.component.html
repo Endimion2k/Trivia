@@ -1,0 +1,52 @@
+<div class="container p-5">
+  <div class="row">
+    <p class="border border-dark time">Este ora {{ now }}</p>
+    <p class="text-center" *ngIf="currentQuiz < 5">
+      Intrebarea {{ currentQuiz + 1 }} din {{ quizzes.length }}
+    </p>
+    <div class="col-sm-8 offset-2">
+      <div *ngIf="currentQuiz < 5">
+        <h1 class="text-center">{{ quizzes[currentQuiz].question }}</h1>
+        <p class="text-center">Mai ai {{ timeLeft }} secunde</p>
+        <ul class="list-group" *ngFor="let quiz of quizzes[currentQuiz].answer">
+          <label>
+            <li
+              class="list-group-item text-center"
+              appBackground
+              [correctAnswer]="quiz.correct"
+            >
+              <input
+                type="radio"
+                name="options"
+                (change)="onAnswer(quiz.correct)"
+                [disabled]="answerSelected"
+              />
+              {{ quiz.option }}
+            </li>
+          </label>
+        </ul>
+      </div>
+      <div class="col-lg-8 offset-2" *ngIf="currentQuiz > 4">
+        <h2 class="col-sm-8 offset-2 text-center">Cam asa te-ai descurcat</h2>
+        <div class="col-sm-8 offset-2 text-center" *ngIf="result">
+          Raspunsuri corecte: {{ correctAnswers }} | Raspunsuri gresite:
+          {{ wrongAnswers }}
+        </div>
+        <div class="fixed-bottom">
+          <img
+            class="col-sm-8 offset-3 fixed-bottom"
+            *ngIf="correctAnswers > wrongAnswers"
+            src="../../assets/drake-yes.png"
+            alt="drake-yes"
+          />
+          <img
+            class="col-sm-8 offset-3 fixed-bottom"
+            *ngIf="wrongAnswers > correctAnswers"
+            src="../../assets/drake-no.png"
+            alt="drake-no"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
